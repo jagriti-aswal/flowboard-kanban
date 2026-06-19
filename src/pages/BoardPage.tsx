@@ -12,8 +12,8 @@ import { BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
 const COLUMNS: Status[] = ['todo', 'inprogress', 'done'];
 
 const BoardPage: React.FC = () => {
-  const { tasks, isLoading, getTasksByStatus, createTask, updateTask, deleteTask, moveTask, analytics } =
-    useBoard();
+  const { tasks, isLoading, createTask, updateTask, deleteTask, moveTask, analytics } =
+  useBoard();
 
   const { filters, filteredTasks, setSearch, setPriority, setCategory, clearFilters, hasActiveFilters } =
     useFilters(tasks);

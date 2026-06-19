@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import TaskCard from "../components/TaskCard";
-
+import type { Task } from "../types";
 // Mock DnD
 vi.mock("@hello-pangea/dnd", () => ({
   Draggable: ({ children }: any) =>
@@ -18,17 +18,17 @@ vi.mock("@hello-pangea/dnd", () => ({
 }));
 
 describe("TaskCard", () => {
-  const mockTask = {
-    id: "1",
-    title: "Fix authentication race condition",
-    description: "Testing description",
-    priority: "High",
-    category: "Bug",
-    status: "todo",
-    attachments: [],
-    createdAt: "",
-    updatedAt: "",
-  };
+  const mockTask: Task = {
+  id: "1",
+  title: "Fix authentication race condition",
+  description: "Testing description",
+  priority: "high" as any,
+  category: "bug" as any,
+  status: "todo",
+  attachments: [],
+  createdAt: "",
+  updatedAt: "",
+};
 
   it("renders task title", () => {
     render(

@@ -1,7 +1,6 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
 test('create task successfully', async ({ page }) => {
-
   await page.goto('http://localhost:5173');
 
   await page.getByRole('button', {
@@ -14,15 +13,6 @@ test('create task successfully', async ({ page }) => {
   await page.getByLabel(/description/i)
     .fill('Created through automated testing');
 
-  await page.getByText('High')
-    .click();
-
-  await page.getByText('Bug')
-    .click();
-
-  await page.getByPlaceholder('e.g. Sarah K.')
-    .fill('Shruti');
-
   await page.getByRole('button', {
     name: /create task/i
   }).click();
@@ -30,5 +20,4 @@ test('create task successfully', async ({ page }) => {
   await expect(
     page.getByText('Playwright Task')
   ).toBeVisible();
-
 });

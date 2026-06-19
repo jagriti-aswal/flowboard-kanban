@@ -1,9 +1,6 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
 test('homepage loads', async ({ page }) => {
-
   await page.goto('/');
-
   await expect(page).toHaveTitle(/FlowBoard/i);
-
 });

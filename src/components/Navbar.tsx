@@ -2,7 +2,7 @@ import React from 'react';
 import { Search, Plus, Bell, ChevronDown, Zap } from 'lucide-react';
 import { Priority, Category } from '../types';
 import { FilterState } from '../hooks/useFilters';
-
+import { useAuth } from '../context/AuthContext';
 interface NavbarProps {
   filters: FilterState;
   onSearchChange: (val: string) => void;
@@ -24,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onCreateTask,
   totalTasks,
 }) => {
+  const { logout, user } = useAuth();
   return (
     <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
       {/* Top bar */}
@@ -55,12 +56,21 @@ const Navbar: React.FC<NavbarProps> = ({
 
           <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 cursor-pointer hover:border-slate-600 transition-colors">
             <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-xs font-bold text-white">
-              SK
+              {user?.name?.slice(0, 2).toUpperCase() || 'U'}
             </div>
-            <span className="hidden md:block text-sm text-slate-300 font-medium">Sarah K.</span>
+            <span className="hidden md:block text-sm text-slate-300 font-medium">
+              {user?.name || 'User'}
+            </span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
           </div>
 
+
+          <button
+            onClick={logout}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white text-sm font-medium rounded-lg transition-colors"
+          >
+            Logout
+          </button>
           <button
             onClick={onCreateTask}
             className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors shadow-lg shadow-indigo-900/40"
