@@ -32,36 +32,35 @@ export const AuthProvider = ({
   children: ReactNode;
 }) => {
 
-  const [user, setUser] =
-    useState<User | null>(
-      JSON.parse(
-        localStorage.getItem("user") || "null"
-      )
-    );
+  const [user, setUser] = useState<User | null>(() => {
+  const storedUser = localStorage.getItem("user");
+
+  if (!storedUser || storedUser === "undefined") {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch {
+    localStorage.removeItem("user");
+    return null;
+  }
+});
 
   const [token, setToken] =
     useState<string | null>(
       localStorage.getItem("token")
     );
 
-  const loginUser = (
-    token: string,
-    user: User
-  ) => {
+  const loginUser = (token: string, user: User) => {
+  if (!token || !user) return;
 
-    localStorage.setItem(
-      "token",
-      token
-    );
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(user)
-    );
-
-    setToken(token);
-    setUser(user);
-  };
+  setToken(token);
+  setUser(user);
+};
 
   const logout = () => {
 
